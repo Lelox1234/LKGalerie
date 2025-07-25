@@ -13,7 +13,8 @@ const images = [
     'src/bild9.jpg',
     'src/bild10.jpg',
     'src/bild11.jpg',
-     'src/bild12.jpg'
+     'src/bild12.jpg',
+     'src/bild13.jpg'
     // Füge weitere Bilddateien hier hinzu
 ];
 
