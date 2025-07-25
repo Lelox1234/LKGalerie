@@ -2,6 +2,7 @@
 
 // Liste deiner Bilder im src-Ordner
 const images = [
+     'src/bild12.jpg',
      'src/bild1.jpg',
     'src/bild2.jpg',
     'src/bild3.jpg',
