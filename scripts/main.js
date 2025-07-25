@@ -2,7 +2,6 @@
 
 // Liste deiner Bilder im src-Ordner
 const images = [
-     'src/bild12.jpg',
      'src/bild1.jpg',
     'src/bild2.jpg',
     'src/bild3.jpg',
@@ -13,6 +12,7 @@ const images = [
     'src/bild8.jpg',
     'src/bild9.jpg',
     'src/bild10.jpg',
+     'src/bild12.jpg',
     'src/bild11.jpg'
     // Füge weitere Bilddateien hier hinzu
 ];
