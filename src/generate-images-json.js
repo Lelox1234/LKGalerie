@@ -15,3 +15,6 @@ fs.writeFileSync(
   path.join(dir, 'images.json'),
   JSON.stringify(files, null, 2)
 );
+
+//strg ö = terminal und dann node src/generate-images-json.js
+// dann wird die Datei images.json im src Ordner erstellt
