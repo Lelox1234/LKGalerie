@@ -35,18 +35,24 @@ const SUPABASE_KEY = 'sb_publishable_uv9fVifiGD7km2lEiT3kPg_XciX8eUr'; // <-- er
 
 async function updateVisitorCount() {
   // Hole aktuellen Wert
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/visits?select=count`, {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/visits?select=count&id=eq.1`, {
     headers: {
       apikey: SUPABASE_KEY,
       Authorization: `Bearer ${SUPABASE_KEY}`,
     }
   });
+
+  if (!res.ok) {
+    console.error('Fehler beim Abrufen des Zählerstands:', await res.text());
+    return;
+  }
+
   const data = await res.json();
   console.log('Aktueller Zählerstand:', data); // Debugging
   let count = data[0]?.count || 0;
 
   // Erhöhe um 1 und speichere
-  const updateRes = await fetch(`${SUPABASE_URL}/rest/v1/visits`, {
+  const updateRes = await fetch(`${SUPABASE_URL}/rest/v1/visits?id=eq.1`, {
     method: 'PATCH',
     headers: {
       apikey: SUPABASE_KEY,
@@ -54,8 +60,13 @@ async function updateVisitorCount() {
       'Content-Type': 'application/json',
       Prefer: 'return=representation'
     },
-    body: JSON.stringify([{ count: count + 1 }])
+    body: JSON.stringify({ count: count + 1 }) // Kein Array, sondern ein Objekt
   });
+
+  if (!updateRes.ok) {
+    console.error('Fehler beim Aktualisieren des Zählerstands:', await updateRes.text());
+    return;
+  }
 
   const updateData = await updateRes.json();
   console.log('Nach Update:', updateData); // Debugging
