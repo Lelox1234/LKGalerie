@@ -32,10 +32,38 @@ fetch('src/images.json')
 
 const SUPABASE_URL = 'https://hjdxlbytltnjaikckhlw.supabase.co'; // Deine Supabase-URL
 const SUPABASE_KEY = 'sb_publishable_uv9fVifiGD7km2lEiT3kPg_XciX8eUr'; // Dein API-Key
+const MY_IP = '149.249.67.61'; // Ersetze dies durch deine eigene IP-Adresse
 
 async function updateVisitorCount() {
   try {
-    // 1. Hole den aktuellen Zählerstand
+    // 1. Hole die IP-Adresse des Besuchers
+    const ipRes = await fetch('https://api.ipify.org?format=json');
+    const ipData = await ipRes.json();
+    const visitorIp = ipData.ip;
+    console.log('Besucher-IP:', visitorIp);
+
+    // 2. Prüfe, ob es deine eigene IP ist
+    if (visitorIp === MY_IP) {
+      console.log('Das ist deine eigene IP. Der Zähler wird nicht erhöht.');
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/visits?select=count&id=eq.1`, {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`,
+        }
+      });
+
+      if (!res.ok) {
+        console.error('Fehler beim Abrufen des Zählerstands:', await res.text());
+        return;
+      }
+
+      const data = await res.json();
+      const count = data[0]?.count ?? 0;
+      document.getElementById('visitor-count').textContent = count;
+      return;
+    }
+
+    // 3. Hole den aktuellen Zählerstand
     const res = await fetch(`${SUPABASE_URL}/rest/v1/visits?select=count&id=eq.1`, {
       headers: {
         apikey: SUPABASE_KEY,
@@ -51,11 +79,11 @@ async function updateVisitorCount() {
     const data = await res.json();
     console.log('Aktueller Zählerstand:', data);
 
-    // 2. Hole den aktuellen Wert von count
+    // 4. Hole den aktuellen Wert von count
     let count = data[0]?.count ?? 0; // Fallback auf 0, falls count null ist
     console.log('Wert von count vor Erhöhung:', count);
 
-    // 3. Erhöhe den Zähler um 1
+    // 5. Erhöhe den Zähler um 1
     const updateRes = await fetch(`${SUPABASE_URL}/rest/v1/visits?id=eq.1`, {
       method: 'PATCH',
       headers: {
@@ -75,7 +103,7 @@ async function updateVisitorCount() {
     const updateData = await updateRes.json();
     console.log('Nach Update:', updateData);
 
-    // 4. Zeige die aktualisierte Zahl auf der Webseite an
+    // 6. Zeige die aktualisierte Zahl auf der Webseite an
     document.getElementById('visitor-count').textContent = count + 1;
   } catch (error) {
     console.error('Ein Fehler ist aufgetreten:', error);
