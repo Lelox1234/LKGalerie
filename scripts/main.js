@@ -41,9 +41,11 @@ async function updateVisitorCount() {
     const ipData = await ipRes.json();
     const visitorIp = ipData.ip;
     console.log('Besucher-IP:', visitorIp);
+    console.log('Deine IP:', MY_IP);
+    console.log('Vergleich:', visitorIp === MY_IP);
 
     // 2. Prüfe, ob es deine eigene IP ist
-    if (visitorIp === MY_IP) {
+    if (visitorIp.trim() === MY_IP.trim()) {
       console.log('Das ist deine eigene IP. Der Zähler wird nicht erhöht.');
       const res = await fetch(`${SUPABASE_URL}/rest/v1/visits?select=count&id=eq.1`, {
         headers: {
@@ -60,7 +62,7 @@ async function updateVisitorCount() {
       const data = await res.json();
       const count = data[0]?.count ?? 0;
       document.getElementById('visitor-count').textContent = count;
-      return;
+      return; // Beende die Funktion hier
     }
 
     // 3. Hole den aktuellen Zählerstand
