@@ -30,49 +30,56 @@ fetch('src/images.json')
     });
   });
 
-const SUPABASE_URL = 'https://hjdxlbytltnjaikckhlw.supabase.co'; // <-- ersetzen!
-const SUPABASE_KEY = 'sb_publishable_uv9fVifiGD7km2lEiT3kPg_XciX8eUr'; // <-- ersetzen!
+const SUPABASE_URL = 'https://hjdxlbytltnjaikckhlw.supabase.co'; // Deine Supabase-URL
+const SUPABASE_KEY = 'sb_publishable_uv9fVifiGD7km2lEiT3kPg_XciX8eUr'; // Dein API-Key
 
 async function updateVisitorCount() {
-  // Hole aktuellen Wert
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/visits?select=count&id=eq.1`, {
-    headers: {
-      apikey: SUPABASE_KEY,
-      Authorization: `Bearer ${SUPABASE_KEY}`,
+  try {
+    // 1. Hole den aktuellen Zählerstand
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/visits?select=count&id=eq.1`, {
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`,
+      }
+    });
+
+    if (!res.ok) {
+      console.error('Fehler beim Abrufen des Zählerstands:', await res.text());
+      return;
     }
-  });
 
-  if (!res.ok) {
-    console.error('Fehler beim Abrufen des Zählerstands:', await res.text());
-    return;
+    const data = await res.json();
+    console.log('Aktueller Zählerstand:', data);
+
+    // 2. Hole den aktuellen Wert von count
+    let count = data[0]?.count ?? 0; // Fallback auf 0, falls count null ist
+    console.log('Wert von count vor Erhöhung:', count);
+
+    // 3. Erhöhe den Zähler um 1
+    const updateRes = await fetch(`${SUPABASE_URL}/rest/v1/visits?id=eq.1`, {
+      method: 'PATCH',
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=representation'
+      },
+      body: JSON.stringify({ count: count + 1 })
+    });
+
+    if (!updateRes.ok) {
+      console.error('Fehler beim Aktualisieren des Zählerstands:', await updateRes.text());
+      return;
+    }
+
+    const updateData = await updateRes.json();
+    console.log('Nach Update:', updateData);
+
+    // 4. Zeige die aktualisierte Zahl auf der Webseite an
+    document.getElementById('visitor-count').textContent = count + 1;
+  } catch (error) {
+    console.error('Ein Fehler ist aufgetreten:', error);
   }
-
-  const data = await res.json();
-  console.log('Aktueller Zählerstand:', data); // Debugging
-  let count = data[0]?.count || 0;
-
-  // Erhöhe um 1 und speichere
-  const updateRes = await fetch(`${SUPABASE_URL}/rest/v1/visits?id=eq.1`, {
-    method: 'PATCH',
-    headers: {
-      apikey: SUPABASE_KEY,
-      Authorization: `Bearer ${SUPABASE_KEY}`,
-      'Content-Type': 'application/json',
-      Prefer: 'return=representation'
-    },
-    body: JSON.stringify({ count: count + 1 }) // Kein Array, sondern ein Objekt
-  });
-
-  if (!updateRes.ok) {
-    console.error('Fehler beim Aktualisieren des Zählerstands:', await updateRes.text());
-    return;
-  }
-
-  const updateData = await updateRes.json();
-  console.log('Nach Update:', updateData); // Debugging
-
-  // Zeige die Zahl an
-  document.getElementById('visitor-count').textContent = count + 1;
 }
 
 updateVisitorCount();
