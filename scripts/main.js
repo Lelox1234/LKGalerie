@@ -29,10 +29,3 @@ fetch('src/images.json')
       });
     });
   });
-
-// Besucherzähler mit countapi.xyz
-fetch('https://api.countapi.xyz/hit/leon-kirchner-paintings/visits')
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById('visitor-count').textContent = data.value;
-  });
