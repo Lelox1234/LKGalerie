@@ -31,7 +31,7 @@ fetch('src/images.json')
   });
 
 const SUPABASE_URL = 'https://hjdxlbytltnjaikckhlw.supabase.co'; // <-- ersetzen!
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhqZHhsYnl0bHRuamFpa2NraGx3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MDAyODEsImV4cCI6MjA2OTI3NjI4MX0.P5sgJj-vMTaXYeBKFonhJ49YrhI3E_xTrZZ4rtZ9ajQ'; // <-- ersetzen!
+const SUPABASE_KEY = 'sb_publishable_uv9fVifiGD7km2lEiT3kPg_XciX8eUr'; // <-- ersetzen!
 
 async function updateVisitorCount() {
   // Hole aktuellen Wert
