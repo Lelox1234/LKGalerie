@@ -105,10 +105,10 @@ footer {
 }
 
 #visitor-counter {
-    position: absolute; /* Fixiert das Element relativ zum nächstgelegenen Container */
+    position: fixed; /* Fixiert das Element an einem festen Ort, unabhängig vom Scrollen */
     top: 20px; /* Abstand von oben */
     right: 30px; /* Abstand von rechts */
-    z-index: 10000;
+    z-index: 10000; /* Stellt sicher, dass es über anderen Elementen liegt */
     display: flex;
     align-items: center;
     font-size: 1.3em;
