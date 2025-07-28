@@ -42,10 +42,11 @@ async function updateVisitorCount() {
     }
   });
   const data = await res.json();
+  console.log('Aktueller Zählerstand:', data); // Debugging
   let count = data[0]?.count || 0;
 
   // Erhöhe um 1 und speichere
-  await fetch(`${SUPABASE_URL}/rest/v1/visits`, {
+  const updateRes = await fetch(`${SUPABASE_URL}/rest/v1/visits`, {
     method: 'PATCH',
     headers: {
       apikey: SUPABASE_KEY,
@@ -55,6 +56,9 @@ async function updateVisitorCount() {
     },
     body: JSON.stringify([{ count: count + 1 }])
   });
+
+  const updateData = await updateRes.json();
+  console.log('Nach Update:', updateData); // Debugging
 
   // Zeige die Zahl an
   document.getElementById('visitor-count').textContent = count + 1;
