@@ -37,7 +37,6 @@ h3 {
     font-size: 1.5em; /* Kleinere Schriftgröße als h2 */
     margin-top: 0; /* Kein Abstand nach oben */
     color: #7c6f57; /* Helleres Braun */
-    font-style: italic; /* Kursiv für einen eleganten Look */
 }
 
 .gallery {
