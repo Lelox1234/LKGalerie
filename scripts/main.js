@@ -114,38 +114,3 @@ async function updateVisitorCount() {
 
 updateVisitorCount();
 
-// Dynamisches Laden der Spotlight-Bilder
-fetch('src/images.json')
-  .then(res => res.json())
-  .then(images => {
-    const spotlightOptions = document.getElementById('spotlight-options');
-    images.forEach(src => {
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = 'Spotlight Option';
-      img.className = 'spotlight-option';
-      spotlightOptions.appendChild(img);
-
-      // Klick-Event für Spotlight-Bild
-      img.addEventListener('click', () => {
-        const spotlightImage = document.getElementById('spotlight-image');
-        const spotlightCaption = document.getElementById('spotlight-caption');
-        spotlightImage.src = src;
-        spotlightCaption.textContent = 'Aktuelles Spotlight-Bild';
-      });
-    });
-  });
-
-// Menü ein- und ausklappen
-const toggleMenuButton = document.getElementById('toggle-menu');
-const spotlightMenu = document.getElementById('spotlight-menu');
-
-toggleMenuButton.addEventListener('click', () => {
-  if (spotlightMenu.style.display === 'none') {
-    spotlightMenu.style.display = 'block';
-    toggleMenuButton.textContent = 'Spotlight schließen';
-  } else {
-    spotlightMenu.style.display = 'none';
-    toggleMenuButton.textContent = 'Spotlight auswählen';
-  }
-});
