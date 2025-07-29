@@ -28,15 +28,15 @@ h1 {
 h2 {
     text-align: center; /* Zentriert die Überschrift */
     font-size: 2em; /* Größe der h2-Überschrift */
-    margin-bottom: 10px; /* Abstand nach unten */
+    margin-bottom: 5px; /* Abstand nach unten */
     color: #7c6f57; /* Warmes Braun */
 }
 
 h3 {
     text-align: center; /* Zentriert den Text */
-    font-size: 1.2em; /* Kleinere Schriftgröße als h2 */
+    font-size: 1.5em; /* Kleinere Schriftgröße als h2 */
     margin-top: 0; /* Kein Abstand nach oben */
-    color: #a89c87; /* Helleres Braun */
+    color: #7c6f57; /* Helleres Braun */
     font-style: italic; /* Kursiv für einen eleganten Look */
 }
 
