@@ -36,22 +36,20 @@ const MY_IP = '149.249.67.61'; // Ersetze dies durch deine eigene IP-Adresse
 
 async function updateVisitorCount() {
   try {
+    // Frage den Benutzer immer, ob er der Besitzer ist
+    const confirmOwner = confirm("Bist du der Besitzer dieser Webseite?");
+    if (confirmOwner) {
+      localStorage.setItem("isOwner", "true");
+      console.log("Du bist jetzt als Besitzer markiert. Der Zähler wird nicht erhöht.");
+    } else {
+      localStorage.removeItem("isOwner");
+      console.log("Du bist kein Besitzer. Der Zähler wird erhöht.");
+    }
+
     // Prüfe, ob der Benutzer als Besitzer markiert ist
     const isOwner = localStorage.getItem("isOwner") === "true";
 
-    if (!isOwner) {
-      // 1. Frage den Benutzer, ob er der Besitzer ist
-      const confirmOwner = confirm("Bist du der Besitzer dieser Webseite?");
-      if (confirmOwner) {
-        localStorage.setItem("isOwner", "true");
-        console.log("Du bist jetzt als Besitzer markiert. Der Zähler wird nicht erhöht.");
-      } else {
-        console.log("Du bist kein Besitzer. Der Zähler wird erhöht.");
-      }
-    }
-
-    // 2. Wenn der Benutzer der Besitzer ist, erhöhe den Zähler nicht
-    if (localStorage.getItem("isOwner") === "true") {
+    if (isOwner) {
       console.log("Das ist dein Besuch. Der Zähler wird nicht erhöht.");
       const res = await fetch(`${SUPABASE_URL}/rest/v1/visits?select=count&id=eq.1`, {
         headers: {
