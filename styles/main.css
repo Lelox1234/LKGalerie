@@ -133,3 +133,69 @@ footer {
     color: #bfa980; /* Neue Farbe für die Zahl */
     font-weight: bold;
 }
+
+#spotlight {
+    text-align: center;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f4f1ea; /* Helles Beige */
+    border: 2px solid #7c6f57; /* Warmes Braun */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#spotlight-container {
+    margin: 20px 0;
+}
+
+#spotlight-image {
+    max-width: 100%;
+    max-height: 300px;
+    border: 5px solid #7c6f57;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#spotlight-caption {
+    font-size: 1.2em;
+    color: #7c6f57;
+    margin-top: 10px;
+}
+
+#toggle-menu {
+    background: #7c6f57;
+    color: #f4f1ea;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#toggle-menu:hover {
+    background: #5e5647;
+}
+
+#spotlight-menu {
+    margin-top: 20px;
+    padding: 10px;
+    background: #e9e5da; /* Sanftes Beige */
+    border: 2px solid #7c6f57;
+    border-radius: 10px;
+}
+
+#spotlight-options img {
+    max-width: 100px;
+    max-height: 100px;
+    margin: 5px;
+    border: 3px solid #7c6f57;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+#spotlight-options img:hover {
+    transform: scale(1.1);
+    border-color: #bfa980; /* Gold-Brauner Ton */
+}
