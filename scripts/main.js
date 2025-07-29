@@ -36,17 +36,23 @@ const MY_IP = '149.249.67.61'; // Ersetze dies durch deine eigene IP-Adresse
 
 async function updateVisitorCount() {
   try {
-    // 1. Hole die IP-Adresse des Besuchers
-    const ipRes = await fetch('https://api.ipify.org?format=json');
-    const ipData = await ipRes.json();
-    const visitorIp = ipData.ip;
-    console.log('Besucher-IP:', visitorIp);
-    console.log('Deine IP:', MY_IP);
-    console.log('Vergleich:', visitorIp === MY_IP);
+    // Prüfe, ob der Benutzer als Besitzer markiert ist
+    const isOwner = localStorage.getItem("isOwner") === "true";
 
-    // 2. Prüfe, ob es deine eigene IP ist
-    if (visitorIp.trim() === MY_IP.trim()) {
-      console.log('Das ist deine eigene IP. Der Zähler wird nicht erhöht.');
+    if (!isOwner) {
+      // 1. Frage den Benutzer, ob er der Besitzer ist
+      const confirmOwner = confirm("Bist du der Besitzer dieser Webseite?");
+      if (confirmOwner) {
+        localStorage.setItem("isOwner", "true");
+        console.log("Du bist jetzt als Besitzer markiert. Der Zähler wird nicht erhöht.");
+      } else {
+        console.log("Du bist kein Besitzer. Der Zähler wird erhöht.");
+      }
+    }
+
+    // 2. Wenn der Benutzer der Besitzer ist, erhöhe den Zähler nicht
+    if (localStorage.getItem("isOwner") === "true") {
+      console.log("Das ist dein Besuch. Der Zähler wird nicht erhöht.");
       const res = await fetch(`${SUPABASE_URL}/rest/v1/visits?select=count&id=eq.1`, {
         headers: {
           apikey: SUPABASE_KEY,
@@ -65,7 +71,7 @@ async function updateVisitorCount() {
       return; // Beende die Funktion hier
     }
 
-    // 3. Hole den aktuellen Zählerstand
+    // 3. Wenn der Benutzer kein Besitzer ist, erhöhe den Zähler
     const res = await fetch(`${SUPABASE_URL}/rest/v1/visits?select=count&id=eq.1`, {
       headers: {
         apikey: SUPABASE_KEY,
