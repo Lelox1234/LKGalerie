@@ -68,7 +68,32 @@ footer {
     width: 100%;
 }
 
+.image-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
 
+.image-grid img {
+    display: block;
+    max-height: 300px;
+    height: 100%;
+    width: auto;
+    border: 5px solid #a89c87; /* helleres Braun */
+    border-radius: 8px;
+    transition: transform 0.2s;
+    box-sizing: border-box;
+    margin: 0;
+    background: none;
+    object-fit: unset;
+}
+
+.image-grid img:hover {
+    transform: scale(1.05);
+    border-color: #bfa980; /* gold-brauner Ton beim Hover */
+}
 
 .lightbox-overlay {
     position: fixed;
@@ -108,4 +133,3 @@ footer {
     color: #bfa980; /* Neue Farbe für die Zahl */
     font-weight: bold;
 }
-
