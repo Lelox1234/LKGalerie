@@ -248,6 +248,12 @@ async function setCount(value) {
 function initializeLikes() {
   const likeButtons = document.querySelectorAll('.like-button');
 
+  // Setze alle Herzen standardmäßig auf schwarz
+  likeButtons.forEach(button => {
+    button.innerHTML = '🖤'; // Schwarzes Herz
+    button.classList.remove('liked'); // Entferne die "liked"-Klasse
+  });
+
   // Lade den gespeicherten Like aus localStorage
   const likedImageId = localStorage.getItem('likedImageId');
 
@@ -262,7 +268,6 @@ function initializeLikes() {
 
   // Event-Listener für alle Like-Buttons
   likeButtons.forEach(button => {
-    button.innerHTML = '🖤'; // Standard: Schwarzes Herz
     button.addEventListener('click', () => {
       const imageId = button.dataset.imageId;
 
