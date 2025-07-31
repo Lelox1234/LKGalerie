@@ -147,8 +147,11 @@ footer {
   border: none;
   font-size: 1.5em;
   cursor: pointer;
-  color: gray;
-  transition: color 0.3s ease;
+  transition: transform 0.2s ease;
+}
+
+.like-button:hover {
+  transform: scale(1.2); /* Vergrößert das Herz beim Hover */
 }
 
 .like-button.liked {
