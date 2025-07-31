@@ -262,6 +262,7 @@ function initializeLikes() {
 
   // Event-Listener für alle Like-Buttons
   likeButtons.forEach(button => {
+    button.innerHTML = '🖤'; // Standard: Schwarzes Herz
     button.addEventListener('click', () => {
       const imageId = button.dataset.imageId;
 

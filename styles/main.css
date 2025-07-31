@@ -153,7 +153,3 @@ footer {
 .like-button:hover {
   transform: scale(1.2); /* Vergrößert das Herz beim Hover */
 }
-
-.like-button.liked {
-  color: red; /* Rot, wenn das Bild geliked ist */
-}
