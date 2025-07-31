@@ -257,7 +257,7 @@ function initializeLikes() {
   // Lade den gespeicherten Like aus localStorage
   const likedImageId = localStorage.getItem('likedImageId');
 
-  // Setze den Like-Status für das gespeicherte Bild
+  // Wenn ein Like gespeichert ist, setze das entsprechende Herz auf rot
   if (likedImageId !== null) {
     const likedButton = document.querySelector(`.like-button[data-image-id="${likedImageId}"]`);
     if (likedButton) {
