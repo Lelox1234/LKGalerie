@@ -248,21 +248,21 @@ async function setCount(value) {
 function initializeLikes() {
   const likeButtons = document.querySelectorAll('.like-button');
 
-  // Setze alle Herzen standardmäßig auf schwarz (♡)
+  // Setze alle Herzen standardmäßig auf schwarz
   likeButtons.forEach(button => {
-    button.innerHTML = '♡'; // Schwarzes Herz
+    button.innerHTML = '🖤'; // Schwarzes Herz
     button.classList.remove('liked'); // Entferne die "liked"-Klasse
   });
 
   // Lade den gespeicherten Like aus localStorage
   const likedImageId = localStorage.getItem('likedImageId');
 
-  // Wenn ein Like gespeichert ist, setze das entsprechende Herz auf rot (♥)
+  // Wenn ein Like gespeichert ist, setze das entsprechende Herz auf rot
   if (likedImageId !== null) {
     const likedButton = document.querySelector(`.like-button[data-image-id="${likedImageId}"]`);
     if (likedButton) {
       likedButton.classList.add('liked');
-      likedButton.innerHTML = '♥'; // Rotes Herz
+      likedButton.innerHTML = '❤️'; // Rotes Herz
     }
   }
 
@@ -274,19 +274,19 @@ function initializeLikes() {
       // Wenn das Bild bereits geliked ist, entlike es
       if (button.classList.contains('liked')) {
         button.classList.remove('liked');
-        button.innerHTML = '♡'; // Schwarzes Herz
+        button.innerHTML = '🖤'; // Schwarzes Herz
         localStorage.removeItem('likedImageId');
         console.log(`Bild ${imageId} wurde entliked.`);
       } else {
         // Entferne den Like von allen anderen Bildern
         likeButtons.forEach(btn => {
           btn.classList.remove('liked');
-          btn.innerHTML = '♡'; // Schwarzes Herz
+          btn.innerHTML = '🖤'; // Schwarzes Herz
         });
 
         // Like das aktuelle Bild
         button.classList.add('liked');
-        button.innerHTML = '♥'; // Rotes Herz
+        button.innerHTML = '❤️'; // Rotes Herz
 
         // Speichere die Bild-ID in localStorage
         localStorage.setItem('likedImageId', imageId);
