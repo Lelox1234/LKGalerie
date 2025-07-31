@@ -133,3 +133,24 @@ footer {
     color: #bfa980; /* Neue Farbe für die Zahl */
     font-weight: bold;
 }
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.like-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: gray;
+  transition: color 0.3s ease;
+}
+
+.like-button.liked {
+  color: red; /* Rot, wenn das Bild geliked ist */
+}

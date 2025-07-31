@@ -4,17 +4,32 @@ fetch('src/images.json')
   .then(res => res.json())
   .then(images => {
     const imageGrid = document.querySelector('.image-grid');
-    images.forEach(src => {
+    images.forEach((src, index) => {
+      const imgContainer = document.createElement('div');
+      imgContainer.className = 'image-container';
+
       const img = document.createElement('img');
       img.src = src;
-      img.alt = 'Painting';
+      img.alt = `Painting ${index + 1}`;
       img.className = 'gallery-image';
-      imageGrid.appendChild(img);
+
+      const likeButton = document.createElement('button');
+      likeButton.className = 'like-button';
+      likeButton.dataset.imageId = index; // Speichere die Bild-ID im Button
+      likeButton.innerHTML = '❤️'; // Herz-Symbol
+
+      // Füge das Bild und den Like-Button in den Container ein
+      imgContainer.appendChild(img);
+      imgContainer.appendChild(likeButton);
+      imageGrid.appendChild(imgContainer);
     });
 
+    // Initialisiere das Like-System
+    initializeLikes();
+
     // Lightbox-Funktionalität
-    document.querySelectorAll('.image-grid img').forEach(img => {
-      img.addEventListener('click', function() {
+    document.querySelectorAll('.gallery-image').forEach(img => {
+      img.addEventListener('click', function () {
         const overlay = document.createElement('div');
         overlay.className = 'lightbox-overlay';
         const bigImg = document.createElement('img');
@@ -23,7 +38,7 @@ fetch('src/images.json')
         overlay.appendChild(bigImg);
         document.body.appendChild(overlay);
 
-        overlay.addEventListener('click', function() {
+        overlay.addEventListener('click', function () {
           overlay.remove();
         });
       });
@@ -227,6 +242,46 @@ async function setCount(value) {
   } catch (error) {
     console.error('Ein Fehler ist aufgetreten:', error);
   }
+}
+
+// Funktion zur Initialisierung des Like-Systems
+function initializeLikes() {
+  const likeButtons = document.querySelectorAll('.like-button');
+
+  // Lade den gespeicherten Like aus localStorage
+  const likedImageId = localStorage.getItem('likedImageId');
+
+  // Setze den Like-Status für das gespeicherte Bild
+  if (likedImageId !== null) {
+    const likedButton = document.querySelector(`.like-button[data-image-id="${likedImageId}"]`);
+    if (likedButton) {
+      likedButton.classList.add('liked');
+    }
+  }
+
+  // Event-Listener für alle Like-Buttons
+  likeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const imageId = button.dataset.imageId;
+
+      // Wenn das Bild bereits geliked ist, entlike es
+      if (button.classList.contains('liked')) {
+        button.classList.remove('liked');
+        localStorage.removeItem('likedImageId');
+        console.log(`Bild ${imageId} wurde entliked.`);
+      } else {
+        // Entferne den Like von allen anderen Bildern
+        likeButtons.forEach(btn => btn.classList.remove('liked'));
+
+        // Like das aktuelle Bild
+        button.classList.add('liked');
+
+        // Speichere die Bild-ID in localStorage
+        localStorage.setItem('likedImageId', imageId);
+        console.log(`Bild ${imageId} wurde geliked.`);
+      }
+    });
+  });
 }
 
 // Aktualisiere den Besucherzähler
