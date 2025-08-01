@@ -248,11 +248,11 @@ async function setCount(value) {
 function initializeLikes() {
   const likeButtons = document.querySelectorAll('.like-button');
 
-  // Setze alle Herzen standardmäßig auf schwarz und initialisiere den Zähler
+  // Setze alle Herzen standardmäßig auf schwarz (🖤) und initialisiere den Zähler
   likeButtons.forEach(button => {
     const imageId = button.dataset.imageId;
 
-    // Erstelle ein Element für den Like-Zähler
+    // Erstelle ein Element für den Like-Zähler, falls es noch nicht existiert
     let likeCounter = button.previousElementSibling;
     if (!likeCounter) {
       likeCounter = document.createElement('span');
@@ -261,19 +261,19 @@ function initializeLikes() {
       button.parentNode.insertBefore(likeCounter, button);
     }
 
-    button.innerHTML = '♡'; // Weißes Herz
+    button.innerHTML = '🖤'; // Schwarzes Herz
     button.classList.remove('liked'); // Entferne die "liked"-Klasse
   });
 
   // Lade den gespeicherten Like aus localStorage
   const likedImageId = localStorage.getItem('likedImageId');
 
-  // Wenn ein Like gespeichert ist, setze das entsprechende Herz auf schwarz (♥)
+  // Wenn ein Like gespeichert ist, setze das entsprechende Herz auf rot (❤️)
   if (likedImageId !== null) {
     const likedButton = document.querySelector(`.like-button[data-image-id="${likedImageId}"]`);
     if (likedButton) {
       likedButton.classList.add('liked');
-      likedButton.innerHTML = '♥'; // Schwarzes Herz
+      likedButton.innerHTML = '❤️'; // Rotes Herz
       const likeCounter = likedButton.previousElementSibling;
       likeCounter.textContent = '1'; // Setze den Zähler auf 1
     }
@@ -288,7 +288,7 @@ function initializeLikes() {
       // Wenn das Bild bereits geliked ist, entlike es
       if (button.classList.contains('liked')) {
         button.classList.remove('liked');
-        button.innerHTML = '♡'; // Weißes Herz
+        button.innerHTML = '🖤'; // Schwarzes Herz
         likeCounter.textContent = '0'; // Setze den Zähler auf 0
         localStorage.removeItem('likedImageId');
         console.log(`Bild ${imageId} wurde entliked.`);
@@ -296,14 +296,14 @@ function initializeLikes() {
         // Entferne den Like von allen anderen Bildern
         likeButtons.forEach(btn => {
           btn.classList.remove('liked');
-          btn.innerHTML = '♡'; // Weißes Herz
+          btn.innerHTML = '🖤'; // Schwarzes Herz
           const counter = btn.previousElementSibling;
           if (counter) counter.textContent = '0'; // Setze den Zähler auf 0
         });
 
         // Like das aktuelle Bild
         button.classList.add('liked');
-        button.innerHTML = '♥'; // Schwarzes Herz
+        button.innerHTML = '❤️'; // Rotes Herz
         likeCounter.textContent = '1'; // Setze den Zähler auf 1
 
         // Speichere die Bild-ID in localStorage
