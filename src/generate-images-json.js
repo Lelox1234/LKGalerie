@@ -3,11 +3,11 @@ const path = require('path');
 
 const dir = __dirname;
 const files = fs.readdirSync(dir)
-  .filter(f => /^bild\d+\.(jpg|jpeg|png|gif)$/i.test(f))
+  .filter(f => /^bild\d+(\.\d+)?\.(jpg|jpeg|png|gif)$/i.test(f)) // Erkenne Dezimalzahlen
   .sort((a, b) => {
-    const numA = parseInt(a.match(/\d+/)[0], 10);
-    const numB = parseInt(b.match(/\d+/)[0], 10);
-    return numB - numA;
+    const numA = parseFloat(a.match(/\d+(\.\d+)?/)[0]); // Extrahiere die Zahl (inkl. Dezimalstellen)
+    const numB = parseFloat(b.match(/\d+(\.\d+)?/)[0]); // Extrahiere die Zahl (inkl. Dezimalstellen)
+    return numB - numA; // Sortiere absteigend
   })
   .map(f => 'src/' + f);
 
